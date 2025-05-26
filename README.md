@@ -27,6 +27,8 @@ C'est tout !
 
 ## Entraînement du modèle Tacotron2 & HiFi-GAN
 
+** Voir les détails sur le readme dans le dossier Tacotron2-PyTorch **
+
 Si vous souhaitez **entraîner les modèles** sur vos propres données ou reproduire notre processus complet :
 
 1. **Préparation des données** :
@@ -41,7 +43,7 @@ Si vous souhaitez **entraîner les modèles** sur vos propres données ou reprod
 2. **Entraînement Tacotron2** :
 
    ```bash
-   python train_tacotron2.py \
+   python train.py \
      --data_dir data/mel_files \
      --output_dir checkpoints/tacotron2 \
      --epochs 1000 \
@@ -54,8 +56,10 @@ Si vous souhaitez **entraîner les modèles** sur vos propres données ou reprod
 
 3. **Entraînement HiFi-GAN** :
 
+   ** Voir les détails sur le readme dans le dossier Hifi-GAN **
+
    ```bash
-   python train_hifigan.py \
+   python train.py \
      --config hifigan/config.json \
      --data_dir data/mel_files \
      --output_dir checkpoints/hifigan \
@@ -64,16 +68,6 @@ Si vous souhaitez **entraîner les modèles** sur vos propres données ou reprod
 
    > **Astuce** : utilisez plusieurs GPUs ou un cluster pour réduire le temps d’entraînement.
 
-4. **Évaluation et export** :
-
-   * Générer un échantillon audio pour valider la qualité :
-
-     ```bash
-     python inference.py \
-       --tacotron_ckpt checkpoints/tacotron2/model.pt \
-       --hifigan_ckpt checkpoints/hifigan/generator.pt \
-       --text "Votre texte de test"
-     ```
 
 ---
 
