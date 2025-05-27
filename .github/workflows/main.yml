@@ -2,19 +2,48 @@ name: Sync to Hugging Face hub
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
     steps:
+      # 1) Checkout complet avec LFS activé
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           lfs: true
+
+      # 2) Installer Git LFS si ce n'est déjà fait
+      - name: Install Git LFS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+
+      # 3) Vérifier / créer .gitattributes à la racine
+      - name: Ensure .gitattributes
+        run: |
+          if [ ! -f .gitattributes ]; then
+            echo "hifi-gan/generator_v1.pt filter=lfs diff=lfs merge=lfs -text" > .gitattributes
+            git add .gitattributes
+            git commit -m "Add .gitattributes for LFS"
+          fi
+
+      # 4) Forcer Git à récupérer tous les objets LFS
+      - name: Pull LFS objects
+        run: git lfs pull --all
+
+      # 5) (Optionnel) ré-indexer le fichier volumineux si nécessaire
+      - name: Re-track model with LFS
+        run: |
+          git rm --cached hifi-gan/generator_v1.pt || true
+          git add hifi-gan/generator_v1.pt
+          git commit -m "Retrack generator_v1.pt via LFS" || echo "No changes to commit"
+
+      # 6) Pousser vers Hugging Face
       - name: Push to hub
         env:
           H_TOKEN: ${{ secrets.H_TOKEN }}
-        run: git push --force https://unbre4kab1e:$H_TOKEN@huggingface.co/spaces/unbre4kab1e/TTS main
+        run: |
+          git push --force https://unbre4kab1e:$H_TOKEN@huggingface.co/spaces/unbre4kab1e/TTS main
