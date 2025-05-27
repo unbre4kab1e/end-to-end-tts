@@ -1,7 +1,4 @@
 torch
-librosa==0.7.2
-tensorboard==2.0
-soundfile==0.10.3.post1
 numpy
 scipy
 pillow
@@ -10,3 +7,5 @@ librosa
 Unidecode
 matplotlib
 tensorboardX
+tensorboard==2.0
+soundfile==0.10.3.post1
