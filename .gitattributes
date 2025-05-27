@@ -1,0 +1,2 @@
+Tacotron2-PyTorch/ckpt_200000.pt filter=lfs diff=lfs merge=lfs -text
+hifi-gan/generator_v1.pt filter=lfs diff=lfs merge=lfs -text
