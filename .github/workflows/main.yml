@@ -16,5 +16,5 @@ jobs:
           lfs: true
       - name: Push to hub
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          H_TOKEN: ${{ secrets.H_TOKEN }}
         run: git push https://unbre4kab1e:$H_TOKEN@huggingface.co/spaces/unbre4kab1e/TTS main
