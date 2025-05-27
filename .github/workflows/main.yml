@@ -17,4 +17,4 @@ jobs:
       - name: Push to hub
         env:
           H_TOKEN: ${{ secrets.H_TOKEN }}
-        run: git push --froce https://unbre4kab1e:$H_TOKEN@huggingface.co/spaces/unbre4kab1e/TTS main
+        run: git push https://unbre4kab1e:$H_TOKEN@huggingface.co/spaces/unbre4kab1e/TTS main
